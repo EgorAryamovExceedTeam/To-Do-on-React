@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import axios from "axios";
-import Close from "../img/close.svg";
-
+import IconButton from "@material-ui/core/IconButton";
+import IconSave from "@material-ui/icons/Save";
+import IconCancel from "@material-ui/icons/Cancel";
+import IconEdit from "@material-ui/icons/Edit";
+import IconDelete from "@material-ui/icons/Delete";
 const TasksList = ({ tasks, setTasks }) => {
   const [editIndex, setEditIndex] = useState(-1);
   const [currentText, setText] = useState("");
@@ -20,9 +23,9 @@ const TasksList = ({ tasks, setTasks }) => {
   };
 
   //edit Task's text function
-  const editTask = (item, index) => {
+  const editTask = (index) => {
     setEditIndex(index);
-    setText(item.text);
+    setText(tasks[index].text);
   };
 
   //   //Save changes
@@ -60,11 +63,18 @@ const TasksList = ({ tasks, setTasks }) => {
   };
 
   return (
-    <ul className="list">
+    <div className="list">
       {tasks.map((item, index) => {
         return index === editIndex ? (
-          <li className={item.isCheck ? `checked` : `normal`} key={index}>
-           
+          <div className={item.isCheck ? `checked` : `normal`} key={index}>
+            <input
+              type="checkbox"
+              checked={item.checked}
+              className="checkbox"
+              id={`checkbox-${item.id}`}
+              onClick={() => changeStatus(item)}
+              disabled
+            />
             <input
               className="text"
               id={`text-${item.id}`}
@@ -73,23 +83,25 @@ const TasksList = ({ tasks, setTasks }) => {
               onChange={(e) => setText(e.target.value)}
               onKeyUp={(e) => saveChangesToEnter(e, item)}
             />
-            <img
-              src="../img/tick.svg"
-              className="save"
-              id={`save-${item.id}`}
-              alt="save"
-              onClick={() => saveChanges(item)}
-            />
-            <img
-              src={Close}
-              className="cancel"
-              id={`cancel-${item.id}`}
-              alt="cancel"
-              onClick={() => cancelChange()}
-            />
-          </li>
+            <IconButton aria-label="save">
+              <IconSave
+                className="save"
+                id={`save-${item.id}`}
+                alt="save"
+                onClick={() => saveChanges(item)}
+              />
+            </IconButton>
+            <IconButton aria-label="cancel">
+              <IconCancel
+                className="cancel"
+                id={`cancel-${item.id}`}
+                alt="cancel"
+                onClick={() => cancelChange()}
+              />
+            </IconButton>
+          </div>
         ) : (
-          <li className={item.isCheck ? `checked` : `normal`} key={index}>
+          <div className={item.isCheck ? `checked` : `normal`} key={index}>
             <input
               type="checkbox"
               checked={item.checked}
@@ -100,24 +112,26 @@ const TasksList = ({ tasks, setTasks }) => {
             <span className="text" id={`text-${item.id}`}>
               {item.text}
             </span>
-            <img
-              src="../img/edit.svg"
-              className="edit"
-              id={`edit-${item.id}`}
-              alt="edit"
-              onClick={() => editTask(item, index)}
-            />
-            <img
-              src="../img/delete.svg"
-              className="delete"
-              id={`delete-${item.id}`}
-              alt="delete"
-              onClick={() => deleteThisTask(item)}
-            />
-          </li>
+            <IconButton aria-label="edit">
+              <IconEdit
+                className="edit"
+                id={`edit-${item.id}`}
+                alt="edit"
+                onClick={() => editTask(index)}
+              />
+            </IconButton>
+            <IconButton aria-label="delete">
+              <IconDelete
+                className="delete"
+                id={`delete-${item.id}`}
+                alt="delete"
+                onClick={() => deleteThisTask(item)}
+              />
+            </IconButton>
+          </div>
         );
       })}
-    </ul>
+    </div>
   );
 };
 
