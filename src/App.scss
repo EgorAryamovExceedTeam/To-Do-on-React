@@ -44,16 +44,71 @@
       .MuiSvgIcon-root {
         width: 2em;
         height: 2em;
+      }
+
     }
 
+    .list {
+      width: 94.2%;
+      // margin-left: auto;
+      // margin-right: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
 
+      .normal, .checked {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 0.5vh;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 1vh 2vw;
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: 5px;
 
-    
-      
+        .checkbox {
+          margin-right: 1.5vw;
+        }
+
+        .text, .textarea {
+          width: 80%;
+          word-wrap: break-word;
+          margin-right: 1vw;
+        }
+
+        .textarea {
+          background-color: white;
+          border-radius: 5px;
+
+          .MuiOutlinedInput-input {
+            font-size: 1.4rem;
+          }
+        }
+
+        .MuiSvgIcon-root {
+          width: 1.5em;
+          height: 1.5em;
+        }
+
+        
+      }
+
+      .normal:hover {
+        border-color: white;
+      }
+
+      .checked:hover {
+        border-color: white;
+      }
+
+      .checked {
+        text-decoration: line-through;
+      }
     }
-    .checked {
-      text-decoration: line-through;
-    }
+
+   
   }
  
 }
