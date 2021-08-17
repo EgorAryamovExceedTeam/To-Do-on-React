@@ -1,0 +1,60 @@
+
+.App-header {
+  background: linear-gradient(to bottom, #0066cc 0%, #99ff99 100%);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+
+  .container {
+    width: 70%;
+
+    .title {
+      font-size: 6rem;
+      text-align: center;
+    }
+
+    .task-bar {
+      width: 80%;
+      margin-left: auto;
+      margin-right: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
+      .text-field {
+        width: 90%;
+        display: flex;
+        justify-content: space-between;
+        background-color: aliceblue;
+        border-radius: 5px;
+
+        .MuiInputBase-inputMultiline {
+          font-size: 1.345rem;
+        }
+
+        // .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline {
+        //   border: 3px solid rgb(85, 70, 223);
+        // }
+      }
+
+      .MuiSvgIcon-root {
+        width: 2em;
+        height: 2em;
+    }
+
+
+
+    
+      
+    }
+    .checked {
+      text-decoration: line-through;
+    }
+  }
+ 
+}
+
