@@ -10,17 +10,23 @@ const TaskBar = () => {
   const [text, setText] = useState("");
 
   const addNewTask = async () => {
-    const response = await axios.post("http://localhost:8000/createTask", {
-      text,
-      isCheck: false,
-    });
-    setTasks(response.data.data);
-    setText("");
+    if (text.trim()) {
+      const response = await axios.post("http://localhost:8000/createTask", {
+        text,
+        isCheck: false,
+      });
+      setTasks(response.data.data);
+      setText("");
+    }
   };
   useEffect(async () => {
     const response = await axios.get("http://localhost:8000/allTasks");
     setTasks(response.data.data);
   }, []);
+
+  const addToEnter = async (e) => {
+    if(e.key === 'Enter') addNewTask();
+  }
 
   return (
     <div className="container">
@@ -36,11 +42,13 @@ const TaskBar = () => {
           onChange={(e) => {
             setText(e.target.value);
           }}
+          onKeyUp={(e) => addToEnter(e)}
         />
-        <IconButton aria-label="delete"
-        fontSize="large"
-        onClick={() => addNewTask()}>
-          <AddIcon />
+        <IconButton aria-label="add">
+          <AddIcon 
+           fontSize="large"
+           onClick={() => addNewTask()}
+          />
         </IconButton>
       </div>
       <hr />

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import axios from "axios";
+import TextField from "@material-ui/core/TextField";
 import IconButton from "@material-ui/core/IconButton";
 import IconSave from "@material-ui/icons/Save";
 import IconCancel from "@material-ui/icons/Cancel";
 import IconEdit from "@material-ui/icons/Edit";
 import IconDelete from "@material-ui/icons/Delete";
+import Checkbox from "@material-ui/core/Checkbox";
+
 const TasksList = ({ tasks, setTasks }) => {
   const [editIndex, setEditIndex] = useState(-1);
   const [currentText, setText] = useState("");
@@ -19,13 +22,15 @@ const TasksList = ({ tasks, setTasks }) => {
         id: id,
       }
     );
-    setTasks(response.data.data);
+    setTasks(response.data.data.sort((a, b) => a.isCheck - b.isCheck));
   };
 
   //edit Task's text function
   const editTask = (index) => {
-    setEditIndex(index);
-    setText(tasks[index].text);
+    if (!tasks[index].isCheck) {
+      setEditIndex(index);
+      setText(tasks[index].text);
+    }
   };
 
   //   //Save changes
@@ -67,23 +72,25 @@ const TasksList = ({ tasks, setTasks }) => {
       {tasks.map((item, index) => {
         return index === editIndex ? (
           <div className={item.isCheck ? `checked` : `normal`} key={index}>
-            <input
-              type="checkbox"
-              checked={item.checked}
+            <Checkbox
+              color="primary"
+              checked={item.isCheck}
               className="checkbox"
               id={`checkbox-${item.id}`}
               onClick={() => changeStatus(item)}
               disabled
             />
-            <input
-              className="text"
+            <TextField
+              className="textarea"
               id={`text-${item.id}`}
               value={currentText}
+              multiline
               autoFocus
               onChange={(e) => setText(e.target.value)}
               onKeyUp={(e) => saveChangesToEnter(e, item)}
+              variant="outlined"
             />
-            <IconButton aria-label="save">
+            <IconButton>
               <IconSave
                 className="save"
                 id={`save-${item.id}`}
@@ -102,9 +109,9 @@ const TasksList = ({ tasks, setTasks }) => {
           </div>
         ) : (
           <div className={item.isCheck ? `checked` : `normal`} key={index}>
-            <input
-              type="checkbox"
-              checked={item.checked}
+            <Checkbox
+              color="primary"
+              checked={item.isCheck}
               className="checkbox"
               id={`checkbox-${item.id}`}
               onClick={() => changeStatus(item)}
